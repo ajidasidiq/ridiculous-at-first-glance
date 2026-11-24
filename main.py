@@ -15,10 +15,15 @@ ENTRY = (
 
 
 def main() -> None:
+    # The gate accepts 1-200 chars of non-whitespace UTF-8 text; verify the
+    # pitch still fits before writing so a later wording change fails loudly
+    # here instead of silently at grading time.
+    line = ENTRY.strip()
+    assert 1 <= len(line) <= 200, f"entry is {len(line)} chars, must be 1-200"
     out_dir = "/output"
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
-        f.write(ENTRY)
+        f.write(line)
 
 
 if __name__ == "__main__":
